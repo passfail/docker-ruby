@@ -2,6 +2,7 @@ package main
 
 import "os"
 import "fmt"
+import "github.com/passfail/docker-ruby/commands"
 
 const version string = "0.0.1"
 
@@ -11,9 +12,9 @@ func main() {
 
   switch command {
     case "install":
-      install(args)
+      commands.Install(args)
     case "link":
-      link(args)
+      commands.Link(args)
     case "version":
       fmt.Println("docker-ruby", version)
     default:
