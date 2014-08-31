@@ -10,9 +10,9 @@ func install(args []string){
   fmt.Println("Install Ruby", getVersionString(version))
 }
 
-// func downloadPackage(version string){
-//   version = getVersionString(version)
-// }
+func downloadPackage(version string){
+  version = getVersionString(version)
+}
 
 func getVersionString(partial string) string {
   url := fmt.Sprintf("http://ruby.itri.ag/versions/%v.txt", partial)
