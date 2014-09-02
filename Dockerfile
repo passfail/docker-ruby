@@ -15,5 +15,8 @@ RUN cd /usr/local/src/github.com/passfail/docker-ruby && go install
 RUN apt-get purge -y golang
 RUN rm -rf $GOPATH/src
 
+# ENV
+ENV RUBIES_DIR /rubies
+
 # TEST
 RUN docker-ruby version
