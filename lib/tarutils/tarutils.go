@@ -8,6 +8,7 @@ import "io/ioutil"
 import "os"
 import "archive/tar"
 import "compress/gzip"
+import "strings"
 
 func Unarchive(ioVar io.ReadCloser, dest string) {
   outBytes, err := ioutil.ReadAll(ioVar)
@@ -35,14 +36,18 @@ func unarchive(buffer *bytes.Buffer, dest string){
       }
 
       // Create file
+      fullpath := strings.Join([]string{dest, hdr.Name}, "/")
       if hdr.FileInfo().IsDir()  {
-        fmt.Println("dir: ", hdr.Name)
+        fmt.Println("dir: ", fullpath)
         err := os.Mkdir(hdr.Name, hdr.FileInfo().Mode())
         if err != nil && !os.IsExist(err) { log.Fatalln(err) }
       } else {
-        fmt.Println("file:", hdr.Name)
+        fmt.Println("file:", fullpath)
         file, err := os.Create(hdr.Name)
         if err != nil { log.Fatalln(err) }
+
+        // Copy Data
+        io.Copy(file, tr)
 
         // Set Permissions
         err = file.Chmod(hdr.FileInfo().Mode())
